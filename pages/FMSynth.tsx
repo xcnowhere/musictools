@@ -152,98 +152,99 @@ const FMSynth: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-64px)] bg-black overflow-hidden p-6 gap-6">
+    <div className="flex flex-col h-[calc(100vh-64px)] bg-black overflow-hidden p-4 sm:p-6 gap-4 sm:gap-6">
       {/* Top: Double Visualization Row */}
-      <div className="grid grid-cols-2 gap-4 h-1/3 min-h-[240px]">
+      <div className="grid grid-cols-2 gap-4 h-1/3 min-h-[180px]">
         <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-zinc-950">
           <canvas ref={canvasRef} width={800} height={400} className="w-full h-full" />
-          <div className="absolute top-4 left-4 flex gap-2">
-            <span className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 text-[10px] font-bold border border-blue-500/20 backdrop-blur-md uppercase">Waveform</span>
+          <div className="absolute top-3 left-3 flex gap-2">
+            <span className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 text-[9px] font-bold border border-blue-500/20 backdrop-blur-md uppercase tracking-widest">Waveform</span>
           </div>
         </div>
         <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-zinc-950">
           <canvas ref={spectrumCanvasRef} width={800} height={400} className="w-full h-full" />
-          <div className="absolute top-4 left-4 flex gap-2">
-            <span className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 text-[10px] font-bold border border-blue-500/20 backdrop-blur-md uppercase">Spectrum</span>
+          <div className="absolute top-3 left-3 flex gap-2">
+            <span className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 text-[9px] font-bold border border-blue-500/20 backdrop-blur-md uppercase tracking-widest">Spectrum</span>
           </div>
         </div>
       </div>
 
       {/* Bottom: Controls and AI */}
-      <div className="flex-1 grid grid-cols-1 lg:grid-cols-5 gap-6 min-h-0">
-        <div className="lg:col-span-3 bg-zinc-900 border border-white/5 rounded-2xl p-6 flex flex-col justify-between">
-          <div className="space-y-6">
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <label className="text-xs font-bold text-zinc-500 tracking-widest uppercase">Carrier Freq</label>
-                <span className="text-blue-400 font-mono text-sm">{carrierFreq}Hz</span>
+      <div className="flex-1 grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6 min-h-0">
+        <div className="lg:col-span-3 bg-zinc-900 border border-white/5 rounded-2xl p-5 sm:p-6 flex flex-col justify-between overflow-hidden">
+          <div className="space-y-5 overflow-y-auto custom-scrollbar pr-2">
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <label className="text-[10px] font-bold text-zinc-500 tracking-widest uppercase">Carrier Freq</label>
+                <span className="text-blue-400 font-mono text-xs">{carrierFreq}Hz</span>
               </div>
               <input 
                 type="range" min="20" max="2000" step="1" 
                 value={carrierFreq} 
                 onChange={(e) => setCarrierFreq(Number(e.target.value))}
-                className="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
               />
             </div>
 
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <label className="text-xs font-bold text-zinc-500 tracking-widest uppercase">Modulator Freq</label>
-                <span className="text-blue-400 font-mono text-sm">{modulatorFreq}Hz</span>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <label className="text-[10px] font-bold text-zinc-500 tracking-widest uppercase">Modulator Freq</label>
+                <span className="text-blue-400 font-mono text-xs">{modulatorFreq}Hz</span>
               </div>
               <input 
                 type="range" min="0" max="2000" step="1" 
                 value={modulatorFreq} 
                 onChange={(e) => setModulatorFreq(Number(e.target.value))}
-                className="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
               />
             </div>
 
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <label className="text-xs font-bold text-zinc-500 tracking-widest uppercase">Mod Index</label>
-                <span className="text-blue-400 font-mono text-sm">{modIndex}</span>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <label className="text-[10px] font-bold text-zinc-500 tracking-widest uppercase">Mod Index</label>
+                <span className="text-blue-400 font-mono text-xs">{modIndex}</span>
               </div>
               <input 
                 type="range" min="0" max="100" step="0.1" 
                 value={modIndex} 
                 onChange={(e) => setModIndex(Number(e.target.value))}
-                className="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
               />
             </div>
           </div>
 
-          <div className="mt-8 flex gap-4">
+          <div className="mt-6 flex gap-3">
             {!isPlaying ? (
-              <button onClick={startAudio} className="flex-1 py-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold transition-all shadow-lg shadow-blue-500/20 uppercase tracking-widest text-sm">Start engine</button>
+              <button onClick={startAudio} className="flex-1 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold transition-all shadow-lg shadow-blue-500/20 uppercase tracking-widest text-[11px]">Start engine</button>
             ) : (
-              <button onClick={stopAudio} className="flex-1 py-4 rounded-xl bg-white text-black font-bold transition-all uppercase tracking-widest text-sm">Kill Signal</button>
+              <button onClick={stopAudio} className="flex-1 py-3 rounded-xl bg-white text-black font-bold transition-all uppercase tracking-widest text-[11px]">Kill Signal</button>
             )}
           </div>
         </div>
 
-        <div className="lg:col-span-2 flex flex-col gap-4">
-          <div className="flex-1 bg-zinc-950 border border-blue-500/20 rounded-2xl p-6 flex flex-col overflow-hidden">
-            <div className="flex items-center justify-between mb-4 flex-shrink-0">
-              <h3 className="text-xs font-bold tracking-widest text-blue-400 uppercase">AI Sonic Analysis</h3>
+        <div className="lg:col-span-2 flex flex-col gap-4 min-h-0">
+          <div className="flex-1 bg-zinc-950 border border-blue-500/20 rounded-2xl p-5 sm:p-6 flex flex-col overflow-hidden">
+            <div className="flex items-center justify-between mb-3 flex-shrink-0">
+              <h3 className="text-[10px] font-bold tracking-widest text-blue-400 uppercase">AI Sonic Analysis</h3>
               <button 
                 onClick={fetchAiInsight}
                 disabled={loadingAi}
-                className="text-[10px] px-3 py-1 rounded-full border border-blue-500/30 hover:bg-blue-500/10 transition-colors disabled:opacity-50"
+                className="text-[9px] px-2 py-0.5 rounded-full border border-blue-500/30 hover:bg-blue-500/10 transition-colors disabled:opacity-50"
               >
-                {loadingAi ? 'ANALYZING...' : 'REFRESH'}
+                {loadingAi ? '...' : 'REFRESH'}
               </button>
             </div>
-            <div className="flex-1 overflow-y-auto custom-scrollbar text-zinc-400 text-xs leading-relaxed italic">
+            <div className="flex-1 overflow-y-auto custom-scrollbar text-zinc-400 text-[11px] leading-relaxed italic">
               {aiInsight ? aiInsight : "Adjust parameters and click refresh for an AI analysis of the sound physics."}
             </div>
           </div>
           
-          <div className="bg-zinc-900 border border-white/5 rounded-2xl p-6 flex-shrink-0">
-            <h4 className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Technical Info</h4>
-            <div className="flex justify-between items-center text-[10px] font-mono text-zinc-600">
-              <span>ALGORITHM: SINE_PM_BASIC</span>
-              <span>SAMPLERATE: 44.1kHz</span>
+          <div className="bg-zinc-900 border border-white/5 rounded-2xl p-4 flex-shrink-0">
+            <h4 className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-1 text-center">Engine Meta</h4>
+            <div className="flex justify-between items-center text-[9px] font-mono text-zinc-600">
+              <span>ALGO: SINE_PM</span>
+              <span>BUFFER: 1024</span>
+              <span>RATE: 44.1k</span>
             </div>
           </div>
         </div>
@@ -251,14 +252,13 @@ const FMSynth: React.FC = () => {
 
       <style>{`
         .custom-scrollbar::-webkit-scrollbar {
-          width: 4px;
+          width: 3px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-          background: rgba(255, 255, 255, 0.05);
-          border-radius: 10px;
+          background: rgba(255, 255, 255, 0.02);
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(59, 130, 246, 0.3);
+          background: rgba(59, 130, 246, 0.2);
           border-radius: 10px;
         }
       `}</style>
