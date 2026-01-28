@@ -1,0 +1,7 @@
+{
+  "name": "Music Tool",
+  "description": "A high-end multi-tool platform featuring an FM Synthesizer, an Interactive Guitar Gallery, and an Audio Effects Processor, powered by Gemini AI for creative insights.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
