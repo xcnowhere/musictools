@@ -61,7 +61,7 @@ const EffectSound: React.FC = () => {
       updateChain(source);
       setIsActive(true);
       draw();
-    } catch (e) { alert("Mic required"); }
+    } catch (e) { alert("Microphone access is required for real-time DSP."); }
   };
 
   const createImpulse = (ctx: AudioContext, d: number, dc: number) => {
@@ -95,6 +95,23 @@ const EffectSound: React.FC = () => {
     if(nodesRef.current['delayNode']) nodesRef.current['delayNode'].gain.value = params.delayFeedback;
     if(nodesRef.current['reverbNode']) nodesRef.current['reverbNode'].gain.value = params.reverbMix;
   }, [params]);
+
+  const fetchAdvice = async () => {
+    const activeList = Object.keys(activeEffects).filter(k => activeEffects[k]);
+    if (activeList.length === 0) {
+      setAiAdvice("Select at least one effect to get an AI optimization report.");
+      return;
+    }
+    setLoadingAi(true);
+    try {
+      const result = await getEffectChainAdvice(activeList);
+      setAiAdvice(result || "Analysis failed.");
+    } catch (e) {
+      setAiAdvice("AI Advice service error.");
+    } finally {
+      setLoadingAi(false);
+    }
+  };
 
   const draw = () => {
     if(!canvasRef.current || !analyserRef.current) return;
@@ -163,14 +180,20 @@ const EffectSound: React.FC = () => {
         </div>
 
         <div className="bg-zinc-900/80 border border-white/5 rounded-2xl p-6 flex flex-col justify-between overflow-hidden shadow-xl relative">
-          <div>
+          <div className="flex-1 flex flex-col overflow-hidden">
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-xs font-bold text-white uppercase tracking-widest">Gemini Advice</h3>
-              <button onClick={() => {}} className="text-[9px] border border-white/10 px-2 py-1 rounded hover:bg-white/5">ADVISE</button>
+              <button 
+                onClick={fetchAdvice} 
+                disabled={loadingAi}
+                className="text-[9px] border border-white/10 px-2 py-1 rounded hover:bg-white/5 disabled:opacity-50"
+              >
+                {loadingAi ? '...' : 'ADVISE'}
+              </button>
             </div>
-            <p className="text-[11px] text-zinc-500 leading-relaxed italic">
-              Enable effects and click "Advise" for AI-powered signal chain optimization.
-            </p>
+            <div className="flex-1 overflow-y-auto pr-2 text-[11px] text-zinc-500 leading-relaxed italic custom-scrollbar">
+              {aiAdvice ? aiAdvice : "Enable effects and click 'Advise' for AI-powered signal chain optimization."}
+            </div>
           </div>
           {isActive && <button onClick={stop} className="w-full py-3 mt-4 rounded-xl border border-red-500/20 text-red-400 text-[10px] font-bold uppercase hover:bg-red-500/10 transition-colors">Emergency Kill</button>}
         </div>
