@@ -1,10 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import Home from './pages/Home';
-import FMSynth from './pages/FMSynth';
-import GuitarGallery from './pages/GuitarGallery';
-import EffectSound from './pages/EffectSound';
+import Home from './pages/Home.tsx';
+import FMSynth from './pages/FMSynth.tsx';
+import GuitarGallery from './pages/GuitarGallery.tsx';
+import EffectSound from './pages/EffectSound.tsx';
 
 const Navbar: React.FC = () => {
   const location = useLocation();
