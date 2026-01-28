@@ -3,60 +3,75 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Tool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Music Tool | Pro Suite</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #050505;
+            --accent-blue: #3b82f6;
+        }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #050505;
+            background-color: var(--bg-color);
             color: #ffffff;
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
+            height: 100vh;
+            width: 100vw;
         }
         .font-heading {
             font-family: 'Space+Grotesk', sans-serif;
         }
+        /* 针对单屏应用优化的滚动条 */
         ::-webkit-scrollbar {
-          width: 6px;
+          width: 4px;
+          height: 4px;
         }
         ::-webkit-scrollbar-track {
           background: #050505;
         }
         ::-webkit-scrollbar-thumb {
-          background: #27272a;
+          background: #18181b;
           border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
-          background: #3f3f46;
+          background: #27272a;
+        }
+        /* 防止页面在移动端上下晃动 */
+        #root {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
     </style>
-<script>
-  // GitHub Pages 静态环境兼容：模拟 process 对象，防止 API 调用时 ReferenceError
-  window.process = {
-    env: {
-      API_KEY: "" 
+    <script>
+      // 核心修正：GitHub Pages 静态环境注入
+      window.process = {
+        env: {
+          NODE_ENV: "production",
+          API_KEY: "" 
+        }
+      };
+    </script>
+    <!-- Babel 必须在模块加载前准备好 -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "react-dom/": "https://esm.sh/react-dom@19.2.4/",
+        "react/": "https://esm.sh/react@19.2.4/",
+        "react": "https://esm.sh/react@19.2.4",
+        "react-router-dom": "https://esm.sh/react-router-dom@7.13.0",
+        "@google/genai": "https://esm.sh/@google/genai@1.38.0"
+      }
     }
-  };
-</script>
-<!-- 引入 Babel 用于浏览器端实时编译 TSX 代码 -->
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://esm.sh/react-dom@19.2.4/",
-    "react/": "https://esm.sh/react@19.2.4/",
-    "react": "https://esm.sh/react@19.2.4",
-    "react-router-dom": "https://esm.sh/react-router-dom@7.13.0",
-    "@google/genai": "https://esm.sh/@google/genai@1.38.0"
-  }
-}
-</script>
+    </script>
 </head>
 <body>
     <div id="root"></div>
-    <!-- 使用 Babel 编译入口文件，需指定 data-presets 以包含 TypeScript 和 React 支持 -->
     <script type="text/babel" data-presets="react,typescript" data-type="module" src="./index.tsx"></script>
 </body>
 </html>
